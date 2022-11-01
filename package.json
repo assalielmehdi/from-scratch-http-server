@@ -10,7 +10,9 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start:dev": "nodemon"
+    "start:dev": "nodemon",
+    "test": "tap",
+    "test:watch": "tap --watch"
   },
   "dependencies": {
     "http-parser-js": "^0.5.8",
@@ -18,7 +20,9 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.7",
+    "@types/tap": "^15.0.7",
     "nodemon": "^2.0.20",
+    "tap": "^16.3.0",
     "ts-node": "^10.9.1"
   }
 }

@@ -1,6 +1,7 @@
 import { Server as TCPServer, Socket } from 'net';
 import { Parser, ParseResult } from './parser';
-import { matchPath } from './utils';
+import { Response } from './response';
+import { matchPath } from './url.util';
 
 export interface Request extends Pick<ParseResult, 'method' | 'headers' | 'body'> {
   params: Record<string, string>;
@@ -18,7 +19,7 @@ export class Server {
     this.server.listen(port, () => console.log(`Server listening on port ${port}`));
   }
 
-  public request(path: string, requestHandler: (request: Request) => void): void {
+  public request(path: string, requestHandler: (request: Request, response: Response) => void): void {
     this.server.addListener('connection', (socket: Socket) => {
       socket.addListener('data', (data: Buffer) => {
         const parseResult = this.parser.parse(data);
@@ -28,11 +29,13 @@ export class Server {
           return;
         }
 
+        const response = new Response(socket);
+
         requestHandler({
           ...parseResult,
           params,
           query: {}
-        });
+        }, response);
       });
     });
   }
