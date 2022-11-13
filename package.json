@@ -11,8 +11,9 @@
   "scripts": {
     "build": "tsc",
     "start:dev": "nodemon",
-    "test": "tap",
-    "test:watch": "tap --watch"
+    "test": "tap --no-check-coverage",
+    "test:watch": "tap --no-check-coverage --watch",
+    "posttest": "tap --no-check-coverage --coverage-report=text-lcov | codecov --pipe"
   },
   "dependencies": {
     "http-parser-js": "^0.5.8",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@types/node": "^18.11.7",
     "@types/tap": "^15.0.7",
+    "codecov": "^3.8.3",
     "nodemon": "^2.0.20",
     "tap": "^16.3.0",
     "ts-node": "^10.9.1"
